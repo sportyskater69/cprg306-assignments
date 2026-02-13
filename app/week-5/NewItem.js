@@ -36,7 +36,7 @@ export default function NewItem() {
 
     return (
         <div className="h-screen flex  justify-center items-center">
-            <form onSubmit={handleSubmit} className=" flex-col bg-white p-5  max-w-150 items-start flex">
+            <form onSubmit={handleSubmit} className=" flex flex-col bg-white p-8 w-full max-w-md rounded-2xl shadow-lg border border-gray-200">
                 <div className=" w-full mb-10 ">
                     <label>
                         Name:
@@ -48,23 +48,23 @@ export default function NewItem() {
                         />
                     </label>
                 </div>
-                <div className="flex flex-row mb-10 ">
+                <div className="flex gap-6 mb-6 items-end">
                     <div>
-                        <label className="p-1">
+                        <label>
                             Quantity:
                             <input type="number"
                                 min="1"
                                 max="99"
                                 value={quantity}
                                 onChange={updateQuantity}
-                                className="ml-2 mr-2"
+                                className="mr-2 border rounded-md px-3 py-2 h-10"
                             />
                         </label>
                     </div>
                     <div>
-                        <label className="p-1">
+                        <label>
                             Category:
-                            <select value={category} onChange={updateCategory} className=" border rounded-md">
+                            <select value={category} onChange={updateCategory} className=" border rounded-md px-3 py-2 h-10">
                                 <option>Produce</option>
                                 <option>Dairy</option>
                                 <option>Bakery</option>
@@ -80,7 +80,7 @@ export default function NewItem() {
                         </label>
                     </div>
                 </div>
-                <button type="submit" className="text-white p-2 bg-blue-900 hover:bg-blue-500">+</button>
+                <button type="submit" className="self-start mt-4 text-white px-4 py-1.5 text-sm rounded-md bg-blue-900 hover:bg-blue-700 transition">+</button>
             </form>
         </div>
     );
