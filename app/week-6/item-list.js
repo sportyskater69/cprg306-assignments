@@ -17,7 +17,7 @@ export default function ItemList({ items }) {
     })
     return (
         <div>
-            <div className="">
+            <div>
                 Sort By:
                 <button
                     onClick={() => setSortBy("name")}
