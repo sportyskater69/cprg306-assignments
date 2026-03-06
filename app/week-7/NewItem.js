@@ -4,35 +4,27 @@ import { useState } from "react";
 
 
 export default function NewItem({ onAddItem }) {
-    const [name, setName] = useState('');
-    const [quantity, setQuantity] = useState(1);
-    const [category, setCategory] = useState('Produce');
+    const [item, setItem] = useState({
+        name: "",
+        quantity: 1,
+        category: "produce",
+    })
 
-    const updateQuantity = (event) => {
-        setQuantity(event.target.value);
-    }
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setItem((prev) => ({ ...prev, [name]: value }));
+    };
 
-    const updateName = (event) => {
-        setName(event.target.value);
-    }
-    const updateCategory = (event) => {
-        setCategory(event.target.value);
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const submissionObject = {
-            id: Math.random().toString(36).substring(2, 9),
-            name,
-            quantity,
-            category
+        const newItem = {
+            ...item,
+            id: Math.random().toString(36).substring(2, 9)
         }
-        onAddItem(submissionObject)
-        console.log(submissionObject);
-        setName('');
-        setQuantity(1);
-        setCategory('Produce');
-
+        onAddItem(newItem);
+        const initialState = { name: "", quantity: 1, category: "produce" };
+        setItem(initialState);
     }
 
 
@@ -58,9 +50,10 @@ export default function NewItem({ onAddItem }) {
                         Name:
                         <input
                             id="name"
+                            name="name"
                             type="text"
-                            value={name}
-                            onChange={updateName}
+                            value={item.name}
+                            onChange={handleChange}
                             required={true}
                             className="w-full p-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -72,11 +65,12 @@ export default function NewItem({ onAddItem }) {
                             Quantity:
                             <input
                                 id="quantity"
+                                name="quantity"
                                 type="number"
                                 min="1"
                                 max="99"
-                                value={quantity}
-                                onChange={updateQuantity}
+                                value={item.quantity}
+                                onChange={handleChange}
                                 className="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </label>
@@ -86,8 +80,9 @@ export default function NewItem({ onAddItem }) {
                             Category:
                             <select
                                 id="category"
-                                value={category}
-                                onChange={updateCategory}
+                                name="category"
+                                value={item.category}
+                                onChange={handleChange}
                                 className="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 {categories.map((cat) => (
                                     <option key={cat} value={cat}>
