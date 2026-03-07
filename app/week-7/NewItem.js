@@ -8,7 +8,7 @@ export default function NewItem({ onAddItem }) {
         name: "",
         quantity: 1,
         category: "produce",
-    })
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
