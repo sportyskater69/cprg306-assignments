@@ -43,7 +43,7 @@ export default function NewItem({ onAddItem }) {
     ];
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-100 dark:bg-gray-900 transition-colors">
+        <div className="p-8 flex justify-center items-center bg-gray-100 dark:bg-gray-900 transition-colors">
             <form onSubmit={handleSubmit} className="flex flex-col bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-8 w-full max-w-md rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transition-colors">
                 <div className=" w-full mb-10 ">
                     <label htmlFor="name">
