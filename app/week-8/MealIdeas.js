@@ -35,23 +35,30 @@ export default function MealIdeas({ ingredient }) {
     }, [ingredient]);
 
     return (
-        <div>
-            <h2>Meal Ideas</h2>
+        <div className="w-full max-w-md">
+            <h2 className="text-2xl font-bold mb-4">Meal Ideas</h2>
 
             {ingredient && (
-                <p>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
                     Showing meals with: <b>{ingredient}</b>
                 </p>
             )}
 
             {ingredient && meals.length === 0 ? (
-                <p>No meals found.</p>
+                <p className="text-red-500 font-semibold">No meals found.</p>
             ) : (
-                <ul>
+                <div className="grid gap-4">
                     {meals.map((meal) => (
-                        <li key={meal.idMeal}>{meal.strMeal}</li>
+                        <div
+                            key={meal.idMeal}
+                            className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow"
+                        >
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                                {meal.strMeal}
+                            </span>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
