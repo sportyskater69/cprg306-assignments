@@ -51,9 +51,9 @@ export default function MealIdeas({ ingredient }) {
                     {meals.map((meal) => (
                         <div
                             key={meal.idMeal}
-                            className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow"
+                            className="flex items-center gap-4 p-4 bg-black dark:bg-white border border-gray-300 dark:border-gray-700 rounded-lg shadow"
                         >
-                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                            <span className="font-medium text-white dark:text-black">
                                 {meal.strMeal}
                             </span>
                         </div>
