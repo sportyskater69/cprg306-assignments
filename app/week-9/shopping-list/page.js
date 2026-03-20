@@ -4,6 +4,7 @@ import ItemList from "./item-list";
 import NewItem from "./NewItem";
 import MealIdeas from "./MealIdeas";
 import itemsData from "./items.json"
+import { useUserAuth } from "../../contexts/AuthContext";
 
 export default function Page() {
     const [items, setItems] = useState(itemsData);
@@ -21,6 +22,12 @@ export default function Page() {
 
         setSelectedItemName(cleanedName);
     };
+
+    const { user } = useUserAuth();
+
+    if (!user) {
+        return <p>You must be logged in to view this page.</p>;
+    }
 
     return (
         <main className=" bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-8 transition-colors min-h-screen flex flex-col items-center m-0 ">
