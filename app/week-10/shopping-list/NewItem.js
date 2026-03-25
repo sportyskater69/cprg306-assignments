@@ -12,20 +12,25 @@ export default function NewItem({ onAddItem }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setItem((prev) => ({ ...prev, [name]: value }));
-    };
 
+        setItem((prev) => ({
+            ...prev,
+            [name]: name === "quantity" ? parseInt(value, 10) || 1 : value
+        }));
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const newItem = {
-            ...item,
-            id: Math.random().toString(36).substring(2, 9)
-        }
-        onAddItem(newItem);
-        const initialState = { name: "", quantity: 1, category: "produce" };
-        setItem(initialState);
-    }
+
+        const newItemToSend = {
+            name: item.name,
+            quantity: item.quantity,
+            category: item.category.toLowerCase()
+        };
+
+        onAddItem(newItemToSend);
+        setItem({ name: "", quantity: 1, category: "produce" });
+    };
 
 
     const categories = [

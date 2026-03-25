@@ -1,17 +1,20 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ItemList from "./item-list";
+import { getItems } from "../_services/shopping-list-service";
+import { addItem } from "../_services/shopping-list-service";
 import NewItem from "./NewItem";
 import MealIdeas from "./MealIdeas";
-import itemsData from "./items.json"
 import { useUserAuth } from "../../contexts/AuthContext";
 
 export default function Page() {
-    const [items, setItems] = useState(itemsData);
+    const [items, setItems] = useState([]);
     const [selectedItemName, setSelectedItemName] = useState("");
 
-    const handleAddItem = (newItem) => {
-        setItems((lastItem) => [...lastItem, newItem]);
+    const handleAddItem = async (newItem) => {
+        if (!user) return;
+        const id = await addItem(user.uid, newItem);
+        setItems((lastItems) => [...lastItems, { ...newItem, id }]);
     };
 
     const handleItemSelect = (item) => {
@@ -24,6 +27,19 @@ export default function Page() {
     };
 
     const { user } = useUserAuth();
+
+    useEffect(() => {
+
+        const loadItems = async () => {
+            if (!user) return;
+            const shoppingList = await getItems(user.uid);
+            setItems(shoppingList);
+        };
+
+        loadItems();
+    }, [user]);
+
+
 
     if (!user) {
         return <p>You must be logged in to view this page.</p>;
