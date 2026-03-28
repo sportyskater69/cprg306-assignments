@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import ItemList from "./item-list";
+import Link from "next/link";
 import { getItems } from "../_services/shopping-list-service";
 import { addItem } from "../_services/shopping-list-service";
 import NewItem from "./NewItem";
@@ -13,10 +14,14 @@ export default function Page() {
 
     const handleAddItem = async (newItem) => {
         if (!user) return;
-        const id = await addItem(user.uid, newItem);
-        setItems((lastItems) => [...lastItems, { ...newItem, id }]);
-    };
 
+        try {
+            const id = await addItem(user.uid, newItem);
+            setItems((lastItems) => [...lastItems, { ...newItem, id }]);
+        } catch (error) {
+            console.error("Error adding item:", error);
+        }
+    };
     const handleItemSelect = (item) => {
         let cleanedName = item.name
             .split(",")[0]
@@ -29,20 +34,37 @@ export default function Page() {
     const { user } = useUserAuth();
 
     useEffect(() => {
-
         const loadItems = async () => {
             if (!user) return;
-            const shoppingList = await getItems(user.uid);
-            setItems(shoppingList);
+
+            try {
+                const shoppingList = await getItems(user.uid);
+                setItems(shoppingList);
+            } catch (error) {
+                console.error("Error loading items:", error);
+            }
         };
 
         loadItems();
     }, [user]);
 
 
-
     if (!user) {
-        return <p>You must be logged in to view this page.</p>;
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen">
+                <p>
+                    You are not signed in!
+                </p>
+                <div>
+                    <Link
+                        href="/week-10"
+                        className="underline text-black dark:text-white"
+                    >
+                        Back to User Menu
+                    </Link>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -66,6 +88,16 @@ export default function Page() {
                 </div>
 
             </div>
+
+            <div>
+                <Link
+                    href="/week-10"
+                    className="underline text-black dark:text-white"
+                >
+                    Back to User Menu
+                </Link>
+            </div>
+
         </main>
     );
 }
